@@ -54,14 +54,14 @@ public class UserRepository : IUserRepository
             (
                 Name,
                 Email,
-                PasswordHash,
+                Password,
                 Role
             )
             VALUES
             (
                 @Name,
                 @Email,
-                @PasswordHash,
+                @Password,
                 @Role
             );
 
