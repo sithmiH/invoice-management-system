@@ -1,13 +1,14 @@
-using System.Text;
 using InvoiceManagement.API.Data;
 using InvoiceManagement.API.Helpers;
 using InvoiceManagement.API.Interfaces.Repositories;
 using InvoiceManagement.API.Interfaces.Services;
+using InvoiceManagement.API.Middlewares;
 using InvoiceManagement.API.Repositories;
 using InvoiceManagement.API.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -103,6 +104,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseMiddleware<ExceptionMiddleware>();
 
 app.UseHttpsRedirection();
 

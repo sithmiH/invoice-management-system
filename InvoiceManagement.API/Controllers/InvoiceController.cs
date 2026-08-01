@@ -24,6 +24,7 @@ public class InvoiceController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> GetAllInvoices()
     {
+
         // Admin can view everything
         if (User.IsInRole("Admin"))
         {
