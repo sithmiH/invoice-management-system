@@ -1,0 +1,39 @@
+﻿@using Microsoft.AspNetCore.Http
+
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<div class="container mt-5">
+
+    <div class="card shadow">
+
+        <div class="card-body">
+
+            <h2>Invoice Management System</h2>
+
+            <hr />
+
+            <h4>Welcome, @Context.Session.GetString("Name")</h4>
+
+            <p>
+                <strong>Email:</strong>
+                @Context.Session.GetString("Email")
+            </p>
+
+            <p>
+                <strong>Role:</strong>
+                @Context.Session.GetString("Role")
+            </p>
+
+            <a asp-controller="Account"
+               asp-action="Logout"
+               class="btn btn-danger">
+                Logout
+            </a>
+
+        </div>
+
+    </div>
+
+</div>

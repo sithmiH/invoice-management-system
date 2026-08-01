@@ -1,4 +1,5 @@
 using InvoiceManagement.Web.Models;
+using InvoiceManagement.Web.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -6,6 +7,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddHttpClient();
+
+builder.Services.AddScoped<AuthService>();
 
 builder.Services.AddDistributedMemoryCache();
 
