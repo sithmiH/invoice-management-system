@@ -1,5 +1,6 @@
 ﻿namespace InvoiceManagement.API.DTOs.Auth;
 
+// Represents the data returned to the client after a successful login
 public class AuthResponseDto
 {
     public string Token { get; set; } = string.Empty;

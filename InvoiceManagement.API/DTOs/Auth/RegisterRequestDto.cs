@@ -1,5 +1,6 @@
 ﻿namespace InvoiceManagement.API.DTOs.Auth;
 
+// Represents the data submitted by a client when registering
 public class RegisterRequestDto
 {
     public string Name { get; set; } = string.Empty;

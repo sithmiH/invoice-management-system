@@ -2,6 +2,7 @@
 
 namespace InvoiceManagement.API.Interfaces.Services;
 
+// Defines business layer operations for managing invoices
 public interface IInvoiceService
 {
     Task<IEnumerable<InvoiceResponseDto>> GetAllInvoicesAsync();

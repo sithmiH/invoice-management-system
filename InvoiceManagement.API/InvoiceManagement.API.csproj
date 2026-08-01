@@ -21,8 +21,6 @@
     <Folder Include="Middlewares\" />
     <Folder Include="Helpers\" />
     <Folder Include="Configurations\" />
-    <Folder Include="Repositories\" />
-    <Folder Include="Services\" />
   </ItemGroup>
 
 </Project>

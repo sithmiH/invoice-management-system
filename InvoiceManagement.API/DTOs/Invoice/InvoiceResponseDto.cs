@@ -1,5 +1,6 @@
 ﻿namespace InvoiceManagement.API.DTOs.Invoice;
 
+// Represents the invoice data returned to clients in API responses
 public class InvoiceResponseDto
 {
     public int InvoiceId { get; set; }
