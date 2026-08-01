@@ -25,6 +25,7 @@ builder.Services.AddScoped<IInvoiceRepository, InvoiceRepository>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IJwtService, JwtService>();
 builder.Services.AddScoped<IInvoiceService, InvoiceService>();
+builder.Services.AddScoped<IPaymentLoggerService, PaymentLoggerService>();
 
 // JWT Authentication
 var jwtSettings = builder.Configuration.GetSection("Jwt");

@@ -9,10 +9,14 @@ namespace InvoiceManagement.API.Services;
 public class InvoiceService : IInvoiceService
 {
     private readonly IInvoiceRepository _invoiceRepository;
+    private readonly IPaymentLoggerService _paymentLoggerService;
 
-    public InvoiceService(IInvoiceRepository invoiceRepository)
+    public InvoiceService(
+        IInvoiceRepository invoiceRepository,
+        IPaymentLoggerService paymentLoggerService)
     {
         _invoiceRepository = invoiceRepository;
+        _paymentLoggerService = paymentLoggerService;
     }
 
     // Retrieves all invoices and maps them to response DTOs
@@ -82,7 +86,18 @@ public class InvoiceService : IInvoiceService
         existingInvoice.Amount = request.Amount;
         existingInvoice.Status = request.Status;
 
-        return await _invoiceRepository.UpdateInvoiceAsync(existingInvoice);
+        var updated = await _invoiceRepository.UpdateInvoiceAsync(existingInvoice);
+
+        if (updated &&
+            existingInvoice.Status.Equals("Paid", StringComparison.OrdinalIgnoreCase))
+        {
+            _ = Task.Run(async () =>
+            {
+                await _paymentLoggerService.LogPaymentAsync(existingInvoice);
+            });
+        }
+
+        return updated;
     }
 
     // Deletes an existing invoice
