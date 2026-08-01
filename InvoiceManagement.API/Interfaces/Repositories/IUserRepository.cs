@@ -9,4 +9,6 @@ public interface IUserRepository
     Task<User?> GetUserByIdAsync(int id);
 
     Task<int> RegisterUserAsync(User user);
+
+    Task<IEnumerable<User>> GetAllUsersAsync();
 }

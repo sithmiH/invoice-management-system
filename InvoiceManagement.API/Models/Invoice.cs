@@ -13,4 +13,6 @@ public class Invoice
     public string Status { get; set; } = string.Empty;
 
     public DateTime CreatedDate { get; set; }
+
+    public int UserId { get; set; }
 }

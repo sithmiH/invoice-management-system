@@ -6,6 +6,8 @@ public interface IInvoiceRepository
 {
     Task<IEnumerable<Invoice>> GetAllInvoicesAsync();
 
+    Task<IEnumerable<Invoice>> GetInvoicesByUserIdAsync(int userId);
+
     Task<Invoice?> GetInvoiceByIdAsync(int id);
 
     Task<int> CreateInvoiceAsync(Invoice invoice);

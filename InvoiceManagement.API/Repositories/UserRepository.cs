@@ -71,4 +71,22 @@ public class UserRepository : IUserRepository
 
         return await connection.ExecuteScalarAsync<int>(query, user);
     }
+
+    // Retrieves all users with the User role
+    public async Task<IEnumerable<User>> GetAllUsersAsync()
+    {
+        const string query = @"
+        SELECT Id,
+               Name,
+               Email,
+               Role,
+               CreatedAt
+        FROM Users
+        WHERE Role = 'User'
+        ORDER BY Name";
+
+        using var connection = _context.CreateConnection();
+
+        return await connection.QueryAsync<User>(query);
+    }
 }

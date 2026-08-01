@@ -15,6 +15,22 @@ public class InvoiceRepository : IInvoiceRepository
         _context = context;
     }
 
+    // Retrieves all invoices belonging to a specific user
+    public async Task<IEnumerable<Invoice>> GetInvoicesByUserIdAsync(int userId)
+    {
+        const string query = @"
+        SELECT *
+        FROM Invoices
+        WHERE UserId = @UserId
+        ORDER BY CreatedDate DESC";
+
+        using var connection = _context.CreateConnection();
+
+        return await connection.QueryAsync<Invoice>(
+            query,
+            new { UserId = userId });
+    }
+
     // Retrieves all invoices
     public async Task<IEnumerable<Invoice>> GetAllInvoicesAsync()
     {
@@ -52,14 +68,16 @@ public class InvoiceRepository : IInvoiceRepository
                 InvoiceNumber,
                 CustomerName,
                 Amount,
-                Status
+                Status,
+                UserId
             )
             VALUES
             (
                 @InvoiceNumber,
                 @CustomerName,
                 @Amount,
-                @Status
+                @Status,
+                @UserId
             );
 
             SELECT CAST(SCOPE_IDENTITY() AS INT);";

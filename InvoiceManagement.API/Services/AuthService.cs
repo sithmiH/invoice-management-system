@@ -77,4 +77,9 @@ public class AuthService : IAuthService
             Role = user.Role
         };
     }
+
+    public async Task<IEnumerable<User>> GetAllUsersAsync()
+    {
+        return await _userRepository.GetAllUsersAsync();
+    }
 }

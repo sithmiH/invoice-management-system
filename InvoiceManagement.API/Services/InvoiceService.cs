@@ -64,7 +64,8 @@ public class InvoiceService : IInvoiceService
             InvoiceNumber = request.InvoiceNumber,
             CustomerName = request.CustomerName,
             Amount = request.Amount,
-            Status = request.Status
+            Status = request.Status,
+            UserId = request.UserId
         };
 
         var invoiceId = await _invoiceRepository.CreateInvoiceAsync(invoice);
@@ -104,5 +105,21 @@ public class InvoiceService : IInvoiceService
     public async Task<bool> DeleteInvoiceAsync(int id)
     {
         return await _invoiceRepository.DeleteInvoiceAsync(id);
+    }
+
+    // Retrieves all invoices belonging to a specific user
+    public async Task<IEnumerable<InvoiceResponseDto>> GetInvoicesByUserIdAsync(int userId)
+    {
+        var invoices = await _invoiceRepository.GetInvoicesByUserIdAsync(userId);
+
+        return invoices.Select(invoice => new InvoiceResponseDto
+        {
+            InvoiceId = invoice.InvoiceId,
+            InvoiceNumber = invoice.InvoiceNumber,
+            CustomerName = invoice.CustomerName,
+            Amount = invoice.Amount,
+            Status = invoice.Status,
+            CreatedDate = invoice.CreatedDate
+        });
     }
 }

@@ -2,6 +2,7 @@
 using InvoiceManagement.API.Interfaces.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace InvoiceManagement.API.Controllers;
 
@@ -19,14 +20,33 @@ public class InvoiceController : ControllerBase
     }
 
     // Retrieves all invoices
+    [Authorize(Roles = "User,Admin")]
     [HttpGet]
     public async Task<IActionResult> GetAllInvoices()
     {
-        var invoices = await _invoiceService.GetAllInvoicesAsync();
-        return Ok(invoices);
+        // Admin can view everything
+        if (User.IsInRole("Admin"))
+        {
+            var invoices = await _invoiceService.GetAllInvoicesAsync();
+            return Ok(invoices);
+        }
+
+        // Normal users only see their own invoices
+        var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value
+                          ?? User.FindFirst("sub")?.Value;
+
+        if (string.IsNullOrEmpty(userIdClaim))
+        {
+            return Unauthorized();
+        }
+
+        var invoicesByUser = await _invoiceService.GetInvoicesByUserIdAsync(int.Parse(userIdClaim));
+
+        return Ok(invoicesByUser);
     }
 
     // Retrieves a invoice by ID
+    [Authorize(Roles = "User,Admin")]
     [HttpGet("{id}")]
     public async Task<IActionResult> GetInvoiceById(int id)
     {
@@ -39,6 +59,7 @@ public class InvoiceController : ControllerBase
     }
 
     // Creates a new invoice
+    [Authorize(Roles = "Admin")]
     [HttpPost]
     public async Task<IActionResult> CreateInvoice(CreateInvoiceDto request)
     {
@@ -54,6 +75,7 @@ public class InvoiceController : ControllerBase
     }
 
     // Updates an existing invoice
+    [Authorize(Roles = "Admin")]
     [HttpPut("{id}")]
     public async Task<IActionResult> UpdateInvoice(int id, UpdateInvoiceDto request)
     {
@@ -69,6 +91,7 @@ public class InvoiceController : ControllerBase
     }
 
     // Deletes an existing invoice
+    [Authorize(Roles = "Admin")]
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteInvoice(int id)
     {

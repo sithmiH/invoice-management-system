@@ -7,6 +7,8 @@ public interface IInvoiceService
 {
     Task<IEnumerable<InvoiceResponseDto>> GetAllInvoicesAsync();
 
+    Task<IEnumerable<InvoiceResponseDto>> GetInvoicesByUserIdAsync(int userId);
+
     Task<InvoiceResponseDto?> GetInvoiceByIdAsync(int id);
 
     Task<bool> CreateInvoiceAsync(CreateInvoiceDto request);
