@@ -10,6 +10,10 @@ public interface IInvoiceService
 
     Task<bool> CreateInvoiceAsync(CreateInvoiceDto request);
 
+    Task<bool> UpdateInvoiceAsync(int id, UpdateInvoiceDto request);
+
+    Task<bool> DeleteInvoiceAsync(int id);
+
     Task<List<UserResponseDto>> GetAllUsersAsync();
 
     Task<InvoiceResponseDto?> GetInvoiceByIdAsync(int id);

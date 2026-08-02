@@ -3,77 +3,89 @@
 @{
     ViewData["Title"] = "Login";
 }
+
 @* Login page *@
-<div class="container mt-5">
+<div class="row justify-content-center align-items-center" style="min-height:75vh;">
 
-    <div class="row justify-content-center">
+    <div class="col-md-7 col-lg-5">
 
-        <div class="col-md-5">
+        @if (TempData["Success"] != null)
+        {
+            <div id="successAlert" class="alert alert-success alert-dismissible fade show">
+                @TempData["Success"]
+            </div>
 
-            <div class="card shadow">
+            <script>
+                setTimeout(function () {
+                    const alert = document.getElementById("successAlert");
+                    if (alert) {
+                        alert.classList.remove("show");
+                        alert.classList.add("fade");
 
-                <div class="card-header text-center">
-                    <h3>Invoice Management System</h3>
-                    <p class="mb-0">Login</p>
-                </div>
-
-                <div class="card-body">
-
-                    @if (ViewBag.Error != null)
-                    {
-                        <div class="alert alert-danger">
-                            @ViewBag.Error
-                        </div>
+                        setTimeout(function () {
+                            alert.remove();
+                        }, 300);
                     }
+                }, 3000); // Disappears after 3 seconds
+            </script>
+        }
 
-                    @if (TempData["Success"] != null)
-                    {
-                        <div class="alert alert-success">
-                            @TempData["Success"]
-                        </div>
-                    }
+        <div class="card shadow-lg border-0">
 
-                    <form asp-action="Login" method="post">
+            <div class="card-header bg-dark text-white text-center py-3">
+                <h4 class="mb-0">Invoice Management System</h4>
+                <small>Sign in to continue</small>
+            </div>
 
-                        <div class="mb-3">
-                            <label class="form-label">Email</label>
+            <div class="card-body p-4">
 
-                            <input asp-for="Email"
-                                   class="form-control" />
+                <form asp-action="Login" method="post">
 
-                            <span asp-validation-for="Email"
-                                  class="text-danger"></span>
-                        </div>
+                    <div asp-validation-summary="ModelOnly"
+                         class="text-danger mb-3">
+                    </div>
 
-                        <div class="mb-3">
-                            <label class="form-label">Password</label>
+                    <div class="mb-3">
+                        <label asp-for="Email" class="form-label"></label>
 
-                            <input asp-for="Password"
-                                   type="password"
-                                   class="form-control" />
+                        <input asp-for="Email"
+                               class="form-control"
+                               placeholder="Enter your email" />
 
-                            <span asp-validation-for="Password"
-                                  class="text-danger"></span>
-                        </div>
+                        <span asp-validation-for="Email"
+                              class="text-danger"></span>
+                    </div>
 
-                        <button class="btn btn-primary w-100"
-                                type="submit">
+                    <div class="mb-4">
+                        <label asp-for="Password" class="form-label"></label>
+
+                        <input asp-for="Password"
+                               type="password"
+                               class="form-control"
+                               placeholder="Enter your password" />
+
+                        <span asp-validation-for="Password"
+                              class="text-danger"></span>
+                    </div>
+
+                    <div class="d-grid">
+                        <button type="submit"
+                                class="btn btn-primary">
                             Login
                         </button>
-
-                    </form>
-
-                    <hr />
-
-                    <div class="text-center">
-
-                        Don't have an account?
-
-                        <a asp-action="Register">
-                            Register
-                        </a>
-
                     </div>
+
+                </form>
+
+                <hr />
+
+                <div class="text-center">
+
+                    Don't have an account?
+
+                    <a asp-action="Register">
+                        Register
+                    </a>
 
                 </div>
 

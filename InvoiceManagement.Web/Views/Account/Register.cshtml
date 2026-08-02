@@ -1,5 +1,86 @@
-﻿@{
+﻿@model InvoiceManagement.Web.DTOs.Auth.RegisterRequestDto
+
+@{
     ViewData["Title"] = "Register";
 }
 
-<h2>Register</h2>
+<div class="row justify-content-center align-items-center" style="min-height:75vh;">
+
+    <div class="col-md-7 col-lg-5">
+
+        <div class="card shadow-lg border-0">
+
+            <div class="card-header bg-success text-white text-center py-3">
+                <h5 class="mb-0 fw-bold">Create an Account</h5>
+                <small>Register a new user</small>
+            </div>
+
+            <div class="card-body p-5">
+
+                <form asp-action="Register" method="post">
+
+                    <div asp-validation-summary="ModelOnly"
+                         class="text-danger mb-3"></div>
+
+                    <div class="mb-3">
+                        <label asp-for="Name" class="form-label"></label>
+
+                        <input asp-for="Name"
+                               class="form-control"
+                               placeholder="Enter your full name" />
+
+                        <span asp-validation-for="Name"
+                              class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Email" class="form-label"></label>
+
+                        <input asp-for="Email"
+                               class="form-control"
+                               placeholder="Enter your email" />
+
+                        <span asp-validation-for="Email"
+                              class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Password" class="form-label"></label>
+
+                        <input asp-for="Password"
+                               type="password"
+                               class="form-control"
+                               placeholder="Enter your password" />
+
+                        <span asp-validation-for="Password"
+                              class="text-danger"></span>
+                    </div>
+
+                    <div class="d-grid">
+                        <button type="submit"
+                                class="btn btn-success py-2">
+                            Register
+                        </button>
+                    </div>
+
+                </form>
+
+                <hr />
+
+                <div class="text-center">
+                    Already have an account?
+                    <a asp-action="Login">Login</a>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+@section Scripts
+{
+    <partial name="_ValidationScriptsPartial" />
+}

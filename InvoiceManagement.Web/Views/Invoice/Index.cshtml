@@ -9,21 +9,28 @@
 @* Invoices list page *@
 <div class="container mt-4">
 
-    <div class="d-flex justify-content-between align-items-center mb-3">
+    <div class="card shadow">
 
-        <h2>Invoices</h2>
+        <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
 
-        @if (Context.Session.GetString("Role") == "Admin")
-        {
-            <a asp-action="Create"
-               class="btn btn-primary">
-                Create Invoice
-            </a>
-        }
+            <h4 class="mb-0">Invoices</h4>
 
-    </div>
+            @if (Context.Session.GetString("Role") == "Admin")
+            {
+                <a asp-action="Create"
+                   class="btn btn-light">
+                    + Create Invoice
+                </a>
+            }
 
-    <table class="table table-bordered table-hover">
+        </div>
+
+        <div class="card-body">
+
+    @if (Model != null && Model.Any())
+{
+
+    <table class="table table-bordered table-hover align-middle">
 
         <thead class="table-dark">
 
@@ -73,16 +80,20 @@
 
                         <a asp-action="Details" 
                            asp-route-id="@invoice.InvoiceId" 
-                           class="btn btn-info btn-sm"> Details 
+                           class="btn btn-info btn-sm me-1"> Details 
                         </a>
 
                         @if (Context.Session.GetString("Role") == "Admin")
                         {
-                            <a class="btn btn-sm btn-warning">
+                            <a asp-action="Edit"
+                               asp-route-id="@invoice.InvoiceId"
+                               class="btn btn-warning btn-sm me-1">
                                 Edit
                             </a>
 
-                            <a class="btn btn-sm btn-danger">
+                            <a asp-action="Delete"
+                               asp-route-id="@invoice.InvoiceId"
+                               class="btn btn-danger btn-sm">
                                 Delete
                             </a>
                         }
@@ -95,6 +106,14 @@
         </tbody>
 
     </table>
+
+            }
+            else
+            {
+                <div class="alert alert-info">
+                    No invoices found.
+                </div>
+            }
 
 </div>
 

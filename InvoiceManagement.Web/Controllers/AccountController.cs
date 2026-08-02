@@ -17,6 +17,11 @@ public class AccountController : Controller
     [HttpGet]
     public IActionResult Login()
     {
+        if (HttpContext.Session.GetString("Token") != null)
+        {
+            return RedirectToAction("Index", "Dashboard");
+        }
+
         return View();
     }
 
@@ -33,7 +38,7 @@ public class AccountController : Controller
 
         if (response == null)
         {
-            ViewBag.Error = "Invalid email or password.";
+            TempData["Error"] = "Invalid email or password.";
             return View(request);
         }
 
@@ -42,6 +47,8 @@ public class AccountController : Controller
         HttpContext.Session.SetString("Email", response.Email);
         HttpContext.Session.SetString("Role", response.Role);
 
+        TempData["Success"] = "Login successful.";
+
         return RedirectToAction("Index", "Dashboard");
     }
 
@@ -49,7 +56,12 @@ public class AccountController : Controller
     [HttpGet]
     public IActionResult Register()
     {
-        return View();
+        if (HttpContext.Session.GetString("Token") != null)
+        {
+            return RedirectToAction("Index", "Dashboard");
+        }
+
+        return View(new RegisterRequestDto());
     }
 
     // Handle Register operation

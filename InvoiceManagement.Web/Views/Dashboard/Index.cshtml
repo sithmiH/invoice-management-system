@@ -1,45 +1,106 @@
-﻿@using Microsoft.AspNetCore.Http
-
-@{
+﻿@{
     ViewData["Title"] = "Dashboard";
 }
 
-@* Dashboard landing page *@
-<div class="container mt-5">
+<div class="container mt-4">
 
-    <div class="card shadow">
+    <div class="mb-4">
+        <h2 class="fw-bold">
+            Welcome, @Context.Session.GetString("Name")
+        </h2>
 
-        <div class="card-body">
+        <p class="text-muted">
+            Invoice Management Dashboard
+        </p>
+    </div>
 
-            <h2>Invoice Management System</h2>
+    <div class="row">
 
-            <hr />
+        <div class="col-md-4 mb-4">
 
-            <h4>Welcome, @Context.Session.GetString("Name")</h4>
+            <div class="card shadow h-100">
 
-            <p>
-                <strong>Email:</strong>
-                @Context.Session.GetString("Email")
-            </p>
+                <div class="card-body text-center">
 
-            <p>
-                <strong>Role:</strong>
-                @Context.Session.GetString("Role")
-            </p>
+                    <h5 class="card-title">
+                        📄 Invoices
+                    </h5>
 
-            <a asp-controller="Invoice"
-               asp-action="Index"
-               class="btn btn-primary mt-3">
-                View Invoices
-            </a>
+                    <p class="card-text">
+                        View all available invoices.
+                    </p>
 
-            <a asp-controller="Account"
-               asp-action="Logout"
-               class="btn btn-danger">
-                Logout
-            </a>
+                    <a asp-controller="Invoice"
+                       asp-action="Index"
+                       class="btn btn-primary">
+                        View Invoices
+                    </a>
+
+                </div>
+
+            </div>
 
         </div>
+
+        @if (Context.Session.GetString("Role") == "Admin")
+        {
+            <div class="col-md-4 mb-4">
+
+                <div class="card shadow h-100">
+
+                    <div class="card-body text-center">
+
+                        <h5 class="card-title">
+                            ➕ Create Invoice
+                        </h5>
+
+                        <p class="card-text">
+                            Create a new invoice.
+                        </p>
+
+                        <a asp-controller="Invoice"
+                           asp-action="Create"
+                           class="btn btn-success">
+                            Create
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+        }
+
+        @if (Context.Session.GetString("Role") == "Admin")
+        {
+        <div class="col-md-4 mb-4">
+
+            <div class="card shadow h-100">
+
+                <div class="card-body text-center">
+
+                    <h5 class="card-title">
+                        👤 Account
+                    </h5>
+
+                    <p class="card-text">
+
+                        Logged in as
+
+                        <br />
+
+                        <strong>
+                            @Context.Session.GetString("Role")
+                        </strong>
+
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+        }
 
     </div>
 

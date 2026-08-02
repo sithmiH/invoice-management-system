@@ -1,0 +1,63 @@
+﻿@model InvoiceManagement.Web.DTOs.Invoice.UpdateInvoiceDto
+
+@{
+    ViewData["Title"] = "Edit Invoice";
+}
+
+<div class="container mt-4">
+
+    <div class="card shadow">
+
+        <div class="card-header bg-warning">
+            <h3>Edit Invoice</h3>
+        </div>
+
+        <div class="card-body">
+
+            <form asp-action="Edit" asp-route-id="@ViewBag.InvoiceId">
+
+                <div class="mb-3">
+                    <label asp-for="CustomerName"></label>
+                    <input asp-for="CustomerName" class="form-control" />
+                    <span asp-validation-for="CustomerName" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Amount"></label>
+                    <input asp-for="Amount" class="form-control" />
+                    <span asp-validation-for="Amount" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+
+                    <label>Status</label>
+
+                    <select asp-for="Status" class="form-select">
+                        <option>Draft</option>
+                        <option>Paid</option>
+                        <option>Cancelled</option>
+                    </select>
+
+                </div>
+
+                <button class="btn btn-success">
+                    Update Invoice
+                </button>
+
+                <a asp-action="Index"
+                   class="btn btn-secondary">
+                    Cancel
+                </a>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+@section Scripts
+{
+    <partial name="_ValidationScriptsPartial" />
+}

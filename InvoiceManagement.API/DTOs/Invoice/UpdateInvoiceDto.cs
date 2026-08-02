@@ -14,7 +14,7 @@ public class UpdateInvoiceDto
     public decimal Amount { get; set; }
 
     [Required(ErrorMessage = "Status is required.")]
-    [RegularExpression("^(Pending|Paid|Cancelled)$",
-        ErrorMessage = "Status must be either 'Pending' or 'Paid' or 'Cancelled'.")]
+    [RegularExpression("^(Draft|Paid|Cancelled)$",
+        ErrorMessage = "Status must be either 'Draft' or 'Paid' or 'Cancelled'.")]
     public string Status { get; set; } = string.Empty;
 }

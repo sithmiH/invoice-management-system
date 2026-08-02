@@ -123,4 +123,39 @@ public class InvoiceService : IInvoiceService
 
         return await response.Content.ReadFromJsonAsync<InvoiceResponseDto>();
     }
+
+    public async Task<bool> UpdateInvoiceAsync(int id, UpdateInvoiceDto request)
+    {
+        var token = _httpContextAccessor.HttpContext?
+            .Session.GetString("Token");
+
+        if (string.IsNullOrEmpty(token))
+            return false;
+
+        _httpClient.DefaultRequestHeaders.Authorization =
+            new AuthenticationHeaderValue("Bearer", token);
+
+        var response = await _httpClient.PutAsJsonAsync(
+            $"{_baseUrl}api/invoice/{id}",
+            request);
+
+        return response.IsSuccessStatusCode;
+    }
+
+    public async Task<bool> DeleteInvoiceAsync(int id)
+    {
+        var token = _httpContextAccessor.HttpContext?
+            .Session.GetString("Token");
+
+        if (string.IsNullOrEmpty(token))
+            return false;
+
+        _httpClient.DefaultRequestHeaders.Authorization =
+            new AuthenticationHeaderValue("Bearer", token);
+
+        var response = await _httpClient.DeleteAsync(
+            $"{_baseUrl}api/invoice/{id}");
+
+        return response.IsSuccessStatusCode;
+    }
 }

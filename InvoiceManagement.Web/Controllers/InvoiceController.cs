@@ -1,10 +1,12 @@
-﻿using InvoiceManagement.Web.Services;
+﻿using InvoiceManagement.Web.DTOs.Invoice;
+using InvoiceManagement.Web.Filters;
+using InvoiceManagement.Web.Services;
 using Microsoft.AspNetCore.Mvc;
-using InvoiceManagement.Web.DTOs.Invoice;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace InvoiceManagement.Web.Controllers;
 
+[SessionAuthorize]
 //  Handles invoice related views
 public class InvoiceController : Controller
 {
@@ -53,9 +55,11 @@ public class InvoiceController : Controller
             var users = await _invoiceService.GetAllUsersAsync();
             ViewBag.Users = new SelectList(users, "Id", "Name");
 
+            TempData["Error"] = "Failed to create invoice.";
             return View(request);
         }
 
+        TempData["Success"] = "Invoice created successfully.";
         return RedirectToAction(nameof(Index));
     }
 
@@ -68,6 +72,70 @@ public class InvoiceController : Controller
             return NotFound();
 
         return View(invoice);
+    }
+
+    public async Task<IActionResult> Edit(int id)
+    {
+        var invoice = await _invoiceService.GetInvoiceByIdAsync(id);
+
+        if (invoice == null)
+            return NotFound();
+
+        var model = new UpdateInvoiceDto
+        {
+            CustomerName = invoice.CustomerName,
+            Amount = invoice.Amount,
+            Status = invoice.Status
+        };
+
+        ViewBag.InvoiceId = id;
+
+        return View(model);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Edit(int id, UpdateInvoiceDto request)
+    {
+        if (!ModelState.IsValid)
+        {
+            ViewBag.InvoiceId = id;
+            return View(request);
+        }
+
+        var success = await _invoiceService.UpdateInvoiceAsync(id, request);
+
+        if (!success)
+        {
+            ModelState.AddModelError("", "Failed to update invoice.");
+            ViewBag.InvoiceId = id;
+            TempData["Error"] = "Failed to update invoice.";
+            return View(request);
+        }
+
+        TempData["Success"] = "Invoice updated successfully.";
+        return RedirectToAction(nameof(Index));
+    }
+
+    public async Task<IActionResult> Delete(int id)
+    {
+        var invoice = await _invoiceService.GetInvoiceByIdAsync(id);
+
+        if (invoice == null)
+            return NotFound();
+
+        return View(invoice);
+    }
+
+    [HttpPost, ActionName("Delete")]
+    public async Task<IActionResult> DeleteConfirmed(int id)
+    {
+        var success = await _invoiceService.DeleteInvoiceAsync(id);
+
+        if (!success)
+            return BadRequest();
+
+        TempData["Success"] = "Invoice deleted successfully.";
+        return RedirectToAction(nameof(Index));
     }
 
 }
