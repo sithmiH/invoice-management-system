@@ -14,7 +14,7 @@ The system provides user authentication and invoice management features, includi
 # Setup Instructions
 
 ## 1. Clone the Repository
-git clone https://github.com/yourusername/InvoiceManagementSystem.git
+git clone https://github.com/sithmiH/invoice-management-system.git
 
 Open the solution in Visual Studio 2022.
 
