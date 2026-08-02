@@ -10,7 +10,7 @@ The system provides user authentication and invoice management features, includi
 - Dapper ORM
 - SQL Server
 - JWT Authentication
-- 
+  
 # Setup Instructions
 
 ## 1. Clone the Repository
