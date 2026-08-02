@@ -89,6 +89,20 @@ builder.Services.AddSwaggerGen(options =>
     });
 });
 
+var webOrigin = builder.Configuration["AllowedOrigins:Web"]
+    ?? "https://sithmi-invoice.runasp.net";
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("WebClient", policy =>
+    {
+        policy
+            .WithOrigins(webOrigin.TrimEnd('/'))
+            .AllowAnyHeader()
+            .AllowAnyMethod();
+    });
+});
+
 var app = builder.Build();
 
 // Seed the default admin account,if admin account dos not exist already
@@ -99,16 +113,14 @@ using (var scope = app.Services.CreateScope())
 }
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+app.UseSwagger();
+app.UseSwaggerUI();
 
 app.UseMiddleware<ExceptionMiddleware>();
 
 app.UseHttpsRedirection();
 
+app.UseCors("WebClient");
 app.UseAuthentication();
 app.UseAuthorization();
 
