@@ -29,7 +29,42 @@
 
     @if (Model != null && Model.Any())
 {
+                @* Search functionality- only for Admins *@
+                @if (Context.Session.GetString("Role") == "Admin")
+                {
+                    <div class="row mb-3">
 
+                    <div class="col-md-12">
+
+                        <form asp-action="Index" method="get">
+
+                            <div class="input-group">
+
+                                <input 
+                                       name="invoiceId"
+                                       class="form-control"
+                                       placeholder="Search Invoice ID" />
+
+                                <button class="btn btn-primary" type="submit">
+                                        <i class="bi bi-search"></i>
+                                </button>
+
+                                    <a asp-action="Index"
+                                       class="btn btn-outline-secondary"
+                                       title="Refresh">
+                                        <i class="bi bi-arrow-clockwise"></i>
+                                    </a>
+
+                            </div>
+
+                        </form>
+
+                    </div>
+
+                </div> 
+                }
+
+    @* Invoice table *@
     <table class="table table-bordered table-hover align-middle">
 
         <thead class="table-dark">
@@ -78,6 +113,7 @@
 
                     <td>
 
+                        @* View invoice details *@
                         <a asp-action="Details" 
                            asp-route-id="@invoice.InvoiceId" 
                            class="btn btn-info btn-sm me-1"> Details 
@@ -85,17 +121,29 @@
 
                         @if (Context.Session.GetString("Role") == "Admin")
                         {
-                            <a asp-action="Edit"
-                               asp-route-id="@invoice.InvoiceId"
-                               class="btn btn-warning btn-sm me-1">
-                                Edit
-                            </a>
+                                        @* Edit and delete options *@
+                                        <a asp-action="Edit"
+                                           asp-route-id="@invoice.InvoiceId"
+                                           class="btn btn-outline-warning btn-sm"
+                                           title="Edit">
+                                            <i class="bi bi-pencil-square"></i>
+                                        </a>
 
-                            <a asp-action="Delete"
-                               asp-route-id="@invoice.InvoiceId"
-                               class="btn btn-danger btn-sm">
-                                Delete
-                            </a>
+                                        <form asp-action="Delete"
+                                              asp-route-id="@invoice.InvoiceId"
+                                              method="post"
+                                              class="d-inline">
+
+                                            <button type="submit"
+                                                    class="btn btn-outline-danger btn-sm"
+                                                    title="Delete"
+                                                    onclick="return confirm('Are you sure you want to delete this invoice?');">
+
+                                                <i class="bi bi-trash"></i>
+
+                                            </button>
+
+                                        </form>
                         }
 
                     </td>
@@ -110,6 +158,7 @@
             }
             else
             {
+                @* Display when no invoices are available *@
                 <div class="alert alert-info">
                     No invoices found.
                 </div>

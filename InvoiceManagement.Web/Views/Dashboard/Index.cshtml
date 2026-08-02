@@ -2,6 +2,7 @@
     ViewData["Title"] = "Dashboard";
 }
 
+@* Dashboard page *@
 <div class="container mt-4">
 
     <div class="mb-4">
@@ -16,6 +17,7 @@
 
     <div class="row">
 
+        @* View invoices card *@
         <div class="col-md-4 mb-4">
 
             <div class="card shadow h-100">
@@ -42,6 +44,7 @@
 
         </div>
 
+        @* Create invoice card *@
         @if (Context.Session.GetString("Role") == "Admin")
         {
             <div class="col-md-4 mb-4">
@@ -71,6 +74,7 @@
             </div>
         }
 
+        @* Display logged in user role *@
         @if (Context.Session.GetString("Role") == "Admin")
         {
         <div class="col-md-4 mb-4">

@@ -18,8 +18,21 @@ public class InvoiceController : Controller
     }
 
     // Displays the all invoices list
-    public async Task<IActionResult> Index()
+    public async Task<IActionResult> Index(int? invoiceId)
     {
+        if (invoiceId.HasValue)
+        {
+            var invoice = await _invoiceService.GetInvoiceByIdAsync(invoiceId.Value);
+
+            if (invoice == null)
+            {
+                TempData["Error"] = "Invoice not found.";
+                return View(new List<InvoiceResponseDto>());
+            }
+
+            return View(new List<InvoiceResponseDto> { invoice });
+        }
+
         var invoices = await _invoiceService.GetAllInvoicesAsync();
 
         return View(invoices);
@@ -74,6 +87,7 @@ public class InvoiceController : Controller
         return View(invoice);
     }
 
+    // Displays the invoice edit form
     public async Task<IActionResult> Edit(int id)
     {
         var invoice = await _invoiceService.GetInvoiceByIdAsync(id);
@@ -93,6 +107,7 @@ public class InvoiceController : Controller
         return View(model);
     }
 
+    // Handles submission of invoice update form
     [HttpPost]
     public async Task<IActionResult> Edit(int id, UpdateInvoiceDto request)
     {
@@ -116,6 +131,7 @@ public class InvoiceController : Controller
         return RedirectToAction(nameof(Index));
     }
 
+    // Displays the invoice delete confirmation page
     public async Task<IActionResult> Delete(int id)
     {
         var invoice = await _invoiceService.GetInvoiceByIdAsync(id);
@@ -126,6 +142,7 @@ public class InvoiceController : Controller
         return View(invoice);
     }
 
+    // Handles invoice delete after confirmation
     [HttpPost, ActionName("Delete")]
     public async Task<IActionResult> DeleteConfirmed(int id)
     {

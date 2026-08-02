@@ -1,5 +1,6 @@
 ﻿namespace InvoiceManagement.API.DTOs.User;
 
+// this used to return user information from the API
 public class UserResponseDto
 {
     public int Id { get; set; }

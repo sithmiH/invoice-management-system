@@ -1,5 +1,6 @@
 ﻿namespace InvoiceManagement.API.Models;
 
+// Represents an invoice entity stored in the database
 public class Invoice
 {
     public int InvoiceId { get; set; }

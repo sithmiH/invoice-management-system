@@ -2,6 +2,7 @@
 
 namespace InvoiceManagement.API.Interfaces.Repositories;
 
+// This interface provides methods for retrieve, create,update, and delete invoice records
 public interface IInvoiceRepository
 {
     Task<IEnumerable<Invoice>> GetAllInvoicesAsync();

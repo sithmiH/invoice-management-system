@@ -124,6 +124,7 @@ public class InvoiceService : IInvoiceService
         return await response.Content.ReadFromJsonAsync<InvoiceResponseDto>();
     }
 
+    // Updates an existing invoice
     public async Task<bool> UpdateInvoiceAsync(int id, UpdateInvoiceDto request)
     {
         var token = _httpContextAccessor.HttpContext?
@@ -142,6 +143,7 @@ public class InvoiceService : IInvoiceService
         return response.IsSuccessStatusCode;
     }
 
+    // Deletes an existing invoice
     public async Task<bool> DeleteInvoiceAsync(int id)
     {
         var token = _httpContextAccessor.HttpContext?

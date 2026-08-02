@@ -4,6 +4,7 @@
     ViewData["Title"] = "Delete Invoice";
 }
 
+@* Delete invoice confirmation page *@
 <div class="container mt-4">
 
     <div class="card border-danger shadow">
@@ -31,6 +32,7 @@
 
             </dl>
 
+            @* Form to confirm invoice deletion *@
             <form asp-action="Delete" asp-route-id="@Model.InvoiceId">
 
                 <input type="hidden"

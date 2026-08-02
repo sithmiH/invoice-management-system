@@ -4,6 +4,7 @@
     ViewData["Title"] = "Register";
 }
 
+@* User registration page *@
 <div class="row justify-content-center align-items-center" style="min-height:75vh;">
 
     <div class="col-md-7 col-lg-5">
@@ -17,6 +18,7 @@
 
             <div class="card-body p-5">
 
+                @* Registration form *@
                 <form asp-action="Register" method="post">
 
                     <div asp-validation-summary="ModelOnly"
@@ -82,5 +84,6 @@
 
 @section Scripts
 {
+    @* Enable client side validation *@
     <partial name="_ValidationScriptsPartial" />
 }

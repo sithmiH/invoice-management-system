@@ -27,3 +27,16 @@ CREATE TABLE Invoices
 
     CreatedDate DATETIME NOT NULL DEFAULT GETDATE()
 );
+
+SELECT * FROM Users;
+
+SELECT * FROM Invoices;
+
+DELETE FROM Invoices;
+
+ALTER TABLE Invoices
+ADD UserId INT NOT NULL;
+
+ALTER TABLE Invoices
+ADD CONSTRAINT FK_Invoices_Users
+FOREIGN KEY (UserId) REFERENCES Users(Id);

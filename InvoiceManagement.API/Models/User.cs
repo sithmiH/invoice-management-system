@@ -1,5 +1,6 @@
 ﻿namespace InvoiceManagement.API.Models;
 
+// Represents an user entity stored in the database
 public class User
 {
     public int Id { get; set; }
