@@ -1,0 +1,45 @@
+﻿@model InvoiceManagement.Web.DTOs.Invoice.InvoiceResponseDto
+
+@{
+    ViewData["Title"] = "Invoice Details";
+}
+
+@* single invoice details section *@
+<div class="container mt-4">
+
+    <div class="card shadow">
+
+        <div class="card-header bg-primary text-white">
+            <h3>Invoice Details</h3>
+        </div>
+
+        <div class="card-body">
+
+            <dl class="row">
+
+                <dt class="col-sm-4">Invoice Number</dt>
+                <dd class="col-sm-8">@Model.InvoiceNumber</dd>
+
+                <dt class="col-sm-4">Customer</dt>
+                <dd class="col-sm-8">@Model.CustomerName</dd>
+
+                <dt class="col-sm-4">Amount</dt>
+                <dd class="col-sm-8">@Model.Amount</dd>
+
+                <dt class="col-sm-4">Status</dt>
+                <dd class="col-sm-8">@Model.Status</dd>
+
+                <dt class="col-sm-4">Created Date</dt>
+                <dd class="col-sm-8">@Model.CreatedDate</dd>
+
+            </dl>
+
+            <a asp-action="Index" class="btn btn-secondary">
+                Back
+            </a>
+
+        </div>
+
+    </div>
+
+</div>

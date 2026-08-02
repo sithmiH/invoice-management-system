@@ -4,6 +4,7 @@
     ViewData["Title"] = "Dashboard";
 }
 
+@* Dashboard landing page *@
 <div class="container mt-5">
 
     <div class="card shadow">
@@ -25,6 +26,12 @@
                 <strong>Role:</strong>
                 @Context.Session.GetString("Role")
             </p>
+
+            <a asp-controller="Invoice"
+               asp-action="Index"
+               class="btn btn-primary mt-3">
+                View Invoices
+            </a>
 
             <a asp-controller="Account"
                asp-action="Logout"

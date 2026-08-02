@@ -8,7 +8,11 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddHttpClient();
 
-builder.Services.AddScoped<AuthService>();
+builder.Services.AddHttpContextAccessor();
+
+builder.Services.AddScoped<IAuthService, AuthService>();
+
+builder.Services.AddScoped<IInvoiceService, InvoiceService>();
 
 builder.Services.AddDistributedMemoryCache();
 

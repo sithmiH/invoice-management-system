@@ -6,7 +6,8 @@ using InvoiceManagement.Web.Models;
 
 namespace InvoiceManagement.Web.Services;
 
-public class AuthService
+//  MVC side service that calls the backend Auth API
+public class AuthService : IAuthService
 {
     private readonly HttpClient _httpClient;
     private readonly string _baseUrl;
@@ -19,6 +20,7 @@ public class AuthService
         _baseUrl = apiSettings.Value.BaseUrl;
     }
 
+    // Calls the login endpoint and returns the response
     public async Task<AuthResponseDto?> LoginAsync(LoginRequestDto request)
     {
         var json = JsonSerializer.Serialize(request);
@@ -47,6 +49,7 @@ public class AuthService
             });
     }
 
+    // Calls the register endpoint to create a new user
     public async Task<bool> RegisterAsync(RegisterRequestDto request)
     {
         var json = JsonSerializer.Serialize(request);

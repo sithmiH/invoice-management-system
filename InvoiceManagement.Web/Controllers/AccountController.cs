@@ -6,9 +6,9 @@ namespace InvoiceManagement.Web.Controllers;
 
 public class AccountController : Controller
 {
-    private readonly AuthService _authService;
+    private readonly IAuthService _authService;
 
-    public AccountController(AuthService authService)
+    public AccountController(IAuthService authService)
     {
         _authService = authService;
     }
@@ -20,7 +20,7 @@ public class AccountController : Controller
         return View();
     }
 
-    // Handle Login
+    // Handle Login operation
     [HttpPost]
     public async Task<IActionResult> Login(LoginRequestDto request)
     {
@@ -52,7 +52,7 @@ public class AccountController : Controller
         return View();
     }
 
-    // Handle Register
+    // Handle Register operation
     [HttpPost]
     public async Task<IActionResult> Register(RegisterRequestDto request)
     {
